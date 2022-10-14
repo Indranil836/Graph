@@ -1,0 +1,42 @@
+//dfs 
+    public static void dfs(int node,ArrayList<ArrayList<Integer>> adjLs,int []visited){
+        visited[node]=1;
+        for(Integer it:adjLs.get(node)){
+            if(visited[it]==0){
+                dfs(it,adjLs,visited);
+            }
+        }
+    }
+    
+    
+    static int numProvinces(ArrayList<ArrayList<Integer>> adj, int V) {
+        
+        //creating adjency list
+        ArrayList<ArrayList<Integer>> adjLs= new ArrayList<ArrayList<Integer>> ();
+        for(int k=0;k<V;k++){
+            adjLs.add(new ArrayList<Integer>());
+        }
+        
+        //to change adjency matrix to adjency List 
+        for(int i=0;i<V;i++){
+            for(int j=0;j<V;j++){
+                //not consider self node
+                if(adj.get(i).get(j)==1 && i!=j){
+                    adjLs.get(i).add(j);
+                    adjLs.get(j).add(i);
+                }
+            }
+        }
+        
+        
+        //count the province
+        int count=0;
+        int visited[]=new int[V];
+        for(int i=0;i<V;i++){
+            if(visited[i]==0){
+                count++;
+                dfs(i,adjLs,visited);
+            }
+        }
+        return count;
+    }
